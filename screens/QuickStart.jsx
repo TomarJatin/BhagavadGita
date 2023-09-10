@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 
-export default function Verse() {
+export default function QuickStart() {
   return (
     <View>
-      <Text>Verse</Text>
+      <Text>QuickStart</Text>
     </View>
   );
 }

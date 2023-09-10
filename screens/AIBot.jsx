@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 
-export default function Verse() {
+export default function AIBot() {
   return (
     <View>
-      <Text>Verse</Text>
+      <Text>AIBot Comming Soon</Text>
     </View>
   );
 }

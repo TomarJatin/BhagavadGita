@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 
-export default function Verse() {
+export default function AudioBook() {
   return (
     <View>
-      <Text>Verse</Text>
+      <Text>AudioBook</Text>
     </View>
   );
 }
