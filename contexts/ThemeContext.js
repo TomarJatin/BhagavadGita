@@ -9,7 +9,7 @@ const ThemeContext = createContext();
 
 // Data Provider component
 const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
 
   const getTheme = useCallback(async () => {
     const _theme = await AsyncStorage.getItem("theme");

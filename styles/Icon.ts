@@ -1,4 +1,4 @@
-export const icons = (theme) => ({
+export const icons = (theme: string) => ({
     arrowLeft: theme === 'light'? require("../assets/arrowleft.svg"): require('../assets/arrowleft.svg'),
     bookMark: theme === 'light'? require("../assets/checked-bookmark.svg"): require('../assets/checked-bookmark.svg'),
     flowerIcon: theme === 'light'? require("../assets/flower-icon.png"): require('../assets/flower-icon.png'),
