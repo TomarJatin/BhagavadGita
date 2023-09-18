@@ -9,6 +9,8 @@ import {
 } from "@expo-google-fonts/inter";
 import Route from "./navigation/home";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { ChapterProvider } from "./contexts/ChapterContext";
+import { VerseProvider } from "./contexts/VerseContext";
 
 function App() {
   let [fontsLoaded] = useFonts({
@@ -26,7 +28,11 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Route />
+      <ChapterProvider>
+        <VerseProvider>
+          <Route />
+        </VerseProvider>
+      </ChapterProvider>
     </ThemeProvider>
   );
 }
