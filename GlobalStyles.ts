@@ -9,6 +9,7 @@ export const FontFamily = {
 export const FontSize = {
   rehular10pxRegular_size: RFValue(10),
   regular12px: RFValue(12),
+  regular13px: RFValue(13),
   regular14px: RFValue(14),
   regular16px: RFValue(16),
   small9px: RFValue(9)
@@ -23,7 +24,9 @@ export const color = (theme) => ({
   borderColorSecondary: '#DCDCDC',
   fontPink: '#F16060',
   bgPeach: '#FFDFDF', 
-  fontSecondary: '#5A5A5A'
+  fontSecondary: '#5A5A5A',
+  chapterHeading: '#0038FF',
+  gold: '#bf9b30'
 })
 
 /* Paddings */
