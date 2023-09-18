@@ -1,11 +1,28 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-
+import React, { useContext } from "react";
+import { Text, View } from "react-native";
+import { Image } from "expo-image";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { icons } from "../styles/Icon";
+import { FontSize, color } from "../GlobalStyles";
+import { useNavigation } from "@react-navigation/core";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Topbar() {
+  const {theme} = useContext(ThemeContext);
+  const Color = color(theme);
+  const Icons = icons(theme);
+  const navigation = useNavigation();
+
   return (
-    <View>
-      <Text>Topbar</Text>
+    <View style={{ flexDirection: "row", backgroundColor: Color.topbarColor, padding: 14, alignItems: 'center', justifyContent: 'space-between' }}>
+      <Text style={{fontSize: FontSize.regular14px, color: Color.fontWhite, fontWeight: '600'}}>BHAGAVAD GITA</Text>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("Settings")}>
+      <Image
+        style={{width: 16, height: 16}}
+        contentFit="cover"
+        source={Icons.cog}
+      />
+      </TouchableOpacity>
     </View>
   );
 }

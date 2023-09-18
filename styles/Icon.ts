@@ -6,5 +6,6 @@ export const icons = (theme: string) => ({
     playIcon: theme === 'light'? require("../assets/play-icon.svg"): require('../assets/play-icon.svg'),
     krishnaBg: theme === 'light'? require("../assets/shri-krisna-bg.png"): require('../assets/shri-krisna-bg.png'),
     uncheckedBookmark: theme === 'light'? require("../assets/unchecked-bookmark.svg"): require('../assets/unchecked-bookmark.svg'),
-    verseOfTheDay: require('verse-of-the-day.png')
+    verseOfTheDay: require('../assets/verse-of-the-day.png'),
+    cog: require("../assets/cog.svg")
 })

@@ -8,7 +8,7 @@ import {
   Inter_300Light,
 } from "@expo-google-fonts/inter";
 import Route from "./navigation/home";
-import { ThemeProvider } from "@react-navigation/native";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 function App() {
   let [fontsLoaded] = useFonts({

@@ -8,11 +8,17 @@ export const FontFamily = {
 /* font sizes */
 export const FontSize = {
   rehular10pxRegular_size: RFValue(10),
+  regular12px: RFValue(12),
+  regular14px: RFValue(14),
+  regular16px: RFValue(16)
 };
 
 /* Colors */
 export const color = (theme) => ({
-  white: theme === 'light' ? "#fff": '#181818',
+  backgroundColor: theme === 'light' ? "#fff": '#181818',
+  topbarColor: theme === 'light' ? '#5D2EC0': '#5D2EC0',
+  fontWhite: '#fff',
+
 })
 
 /* Paddings */

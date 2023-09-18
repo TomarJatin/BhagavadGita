@@ -1,9 +1,7 @@
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "../../screens/Home";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-// import axios from "axios";
+import {RootStackParamList} from '../../types/navigation';
 import { useState, useEffect, useRef } from "react";
 import Chapter from "../../screens/Chapter";
 import Verse from "../../screens/Verse";
@@ -13,13 +11,16 @@ import AudioBook from "../../screens/AudioBook";
 import Quotes from "../../screens/Quotes";
 import QuickStart from "../../screens/QuickStart";
 import AIBot from "../../screens/AIBot";
+import { NavigationContainer } from "@react-navigation/native";
 
-const Stack = createNativeStackNavigator();
+
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function Route() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -67,5 +68,6 @@ export default function Route() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+      
   );
 }
