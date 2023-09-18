@@ -10,9 +10,11 @@ import { Image } from "expo-image";
 import { icons } from "../styles/Icon";
 import { FlatList } from "react-native-gesture-handler";
 import { Chapters } from "../data/chapters";
+import { ChapterContext } from "../contexts/ChapterContext";
 
 export default function HomeScreen({ navigation }) {
   const { theme } = useContext(ThemeContext);
+  const {setSelectedChapter} = useContext(ChapterContext);
   const Color = color(theme);
   const Icons = icons(theme);
 
@@ -64,7 +66,10 @@ export default function HomeScreen({ navigation }) {
               <FlatList
                 data={Chapters}
                 renderItem={({ item, index }) => (
-                  <TouchableOpacity activeOpacity={0.7}
+                  <TouchableOpacity onPress={() => {
+                    setSelectedChapter(item?.chapter_number);
+                    navigation.navigate("Chapter");
+                  }} activeOpacity={0.7}
                     style={{
                       flexDirection: "row",
                       alignItems: "center",
