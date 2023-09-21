@@ -8,7 +8,6 @@ import { FontSize, color } from "../GlobalStyles";
 import { icons } from "../styles/Icon";
 import Modal from "react-native-modal";
 import { SettingsContext } from "../contexts/SettingsContext";
-import CheckBox from "@react-native-community/checkbox";
 
 export default function Settings({ navigation }) {
   const { theme } = useContext(ThemeContext);
