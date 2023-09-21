@@ -26,7 +26,8 @@ export const color = (theme) => ({
   bgPeach: '#FFDFDF', 
   fontSecondary: '#5A5A5A',
   chapterHeading: '#0038FF',
-  gold: '#bf9b30'
+  gold: '#bf9b30',
+  checkBoxActiveColor: '#F46B45'
 })
 
 /* Paddings */

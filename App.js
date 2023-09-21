@@ -11,6 +11,8 @@ import Route from "./navigation/home";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { ChapterProvider } from "./contexts/ChapterContext";
 import { VerseProvider } from "./contexts/VerseContext";
+import { SaveForLaterProvider } from "./contexts/SaveForLaterContext";
+import { SettingsProvider } from "./contexts/SettingsContext";
 
 function App() {
   let [fontsLoaded] = useFonts({
@@ -30,7 +32,11 @@ function App() {
     <ThemeProvider>
       <ChapterProvider>
         <VerseProvider>
-          <Route />
+          <SaveForLaterProvider>
+            <SettingsProvider>
+              <Route />
+            </SettingsProvider>
+          </SaveForLaterProvider>
         </VerseProvider>
       </ChapterProvider>
     </ThemeProvider>

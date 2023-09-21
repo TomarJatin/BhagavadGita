@@ -9,5 +9,11 @@ export const icons = (theme: string) => ({
     verseOfTheDay: require('../assets/verse-of-the-day.png'),
     cog: require("../assets/cog.svg"),
     list: require("../assets/list.svg"),
-    chevronRight: require("../assets/chevron-right.svg")
+    chevronRight: require("../assets/chevron-right.svg"),
+    language: require("../assets/language.png"),
+    commentary: require("../assets/commentary.png"),
+    wordMeaning: require("../assets/word-meaning.png"),
+    translations: require("../assets/translations.png"),
+    transliterations: require("../assets/transliteration.png"),
+    author: require("../assets/author.png"),
 })

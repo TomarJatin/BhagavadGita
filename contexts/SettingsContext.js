@@ -9,11 +9,21 @@ const SettingsContext = createContext();
 
 // Data Provider component
 const SettingsProvider = ({ children }) => {
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState("english");
   const [commentryOn, setCommentryOn] = useState(true);
+  const [wordMeaningOn, setWordMeaningOn] = useState(true);
   const [translationOn, setTranslationOn] = useState(true);
   const [transliteration, setTransliterationOn] = useState(true);
   const [authorsList, setAuthorsList] = useState([]);
+
+  const handleSwitchButtonChange = (value, key) => {
+    switch(key){
+        case "commentry": setCommentryOn(value); return;
+        case "translation" : setTranslationOn(value); return;
+        case "word meaining": setWordMeaningOn(value); return;
+        case "transliteration": setTransliterationOn(value); return; 
+    }
+  }
 
   useEffect(() => {
     console.log("settings context changed ========================");
@@ -28,11 +38,10 @@ const SettingsProvider = ({ children }) => {
         translationOn,
         transliteration,
         authorsList,
+        wordMeaningOn,
 
+        handleSwitchButtonChange,
         setLanguage,
-        setCommentryOn,
-        setTranslationOn,
-        setTransliterationOn,
         setAuthorsList
       }}
     >
