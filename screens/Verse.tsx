@@ -20,13 +20,42 @@ import { Chapters } from "../data/chapters";
 import { Verses } from "../data/verses";
 import { ChapterContext } from "../contexts/ChapterContext";
 import { VerseContext } from "../contexts/VerseContext";
+import { translations } from "../translations/main";
+import { SettingsContext } from "../contexts/SettingsContext";
+
+type translationType = {
+  id:number,
+description:string,
+author_name:string,
+language:string
+}
 
 export default function Verse({ navigation }) {
   const { theme } = useContext(ThemeContext);
   const { selectedChapter } = useContext(ChapterContext);
   const { selectedVerse } = useContext(VerseContext);
+  const {language, commentryOn, translationOn, transliteration, authorsList, wordMeaningOn} = useContext(SettingsContext);
   const Color = color(theme);
   const Icons = icons(theme);
+
+  const isAuthorSelected = (author: {
+    author_name: string,
+    language: string
+  }) => {
+    return authorsList.some((item) => item.author_name === author.author_name)
+  }
+
+  const getCommentary = () => {
+    return Verses[selectedChapter][selectedVerse-1].commentaries.filter((item) => (item?.language === language))[0]?.description;
+  }
+
+  const getTranslations = (): translationType[] => {
+    const availableTranslations = Verses[selectedChapter][selectedVerse-1].translations.filter((item) => ((item?.language === language && (isAuthorSelected({
+      author_name: item?.author_name,
+      language: language
+    })))));
+    return availableTranslations;
+  }
 
   return React.useMemo(
     () => (
@@ -115,7 +144,8 @@ export default function Verse({ navigation }) {
                     {Verses[selectedChapter][selectedVerse-1].text}
                   </Text>
                 </View>
-                <View style={{marginTop: 30}}>
+                {
+                  transliteration && <View style={{marginTop: 30}}>
                   <Text
                     style={{
                       fontSize: FontSize.regular13px,
@@ -124,7 +154,7 @@ export default function Verse({ navigation }) {
                       textAlign: "center",
                     }}
                   >
-                    TRANSLITERATION
+                    {translations.transliteration[language]}
                   </Text>
                   <Text
                     style={{
@@ -141,7 +171,9 @@ export default function Verse({ navigation }) {
                     {Verses[selectedChapter][selectedVerse-1].transliteration}
                   </Text>
                 </View>
-                <View style={{marginTop: 30}}>
+                }
+                {
+                  wordMeaningOn && <View style={{marginTop: 30}}>
                   <Text
                     style={{
                       fontSize: FontSize.regular13px,
@@ -165,7 +197,9 @@ export default function Verse({ navigation }) {
                     {Verses[selectedChapter][selectedVerse-1].word_meanings}
                   </Text>
                 </View>
-                <View style={{marginTop: 30}}>
+                }
+                {
+                  translationOn && <View style={{marginTop: 30}}>
                   <Text
                     style={{
                       fontSize: FontSize.regular13px,
@@ -174,11 +208,25 @@ export default function Verse({ navigation }) {
                       textAlign: "center",
                     }}
                   >
-                    TRANSLATION
+                    {translations.translations[language]}
                   </Text>
-                  <Text
+                  <FlatList 
+                  data={getTranslations()}
+                  renderItem={({item, index}) => (
+                   <View key={index} style={{marginBottom: 10}}>
+                    <Text
                     style={{
-                      marginTop: 10,
+                      fontSize: FontSize.regular12px,
+                      color: Color.fontPrim,
+                      fontWeight: "400",
+                      lineHeight: 20
+                    }}
+                  >
+                    {translations.author[language]} - {item.author_name}
+                  </Text>
+                     <Text
+                    style={{
+                      marginTop: 6,
                       fontSize: FontSize.regular12px,
                       color: Color.fontPrim,
                       fontWeight: "400",
@@ -186,10 +234,18 @@ export default function Verse({ navigation }) {
                       lineHeight: 20
                     }}
                   >
-                    {Verses[selectedChapter][selectedVerse-1].translations[0].description}
+                    {item.description}
                   </Text>
+                    </View>
+                  )}
+                  style={{
+                    marginTop: 10,
+                  }}
+                  />
                 </View>
-                <View style={{marginTop: 30, paddingBottom:100}}>
+                }
+                {
+                  commentryOn && <View style={{marginTop: 30, paddingBottom:100}}>
                   <Text
                     style={{
                       fontSize: FontSize.regular13px,
@@ -199,7 +255,7 @@ export default function Verse({ navigation }) {
                       
                     }}
                   >
-                    COMMENTARY
+                    {translations.commentary[language]}
                   </Text>
                   <Text
                     style={{
@@ -211,9 +267,10 @@ export default function Verse({ navigation }) {
                       lineHeight: 20
                     }}
                   >
-                    {Verses[selectedChapter][selectedVerse-1].commentaries[0].description}
+                    {getCommentary()}
                   </Text>
                 </View>
+                }
                 {/* <Text
                   style={{
                     marginTop: 30,

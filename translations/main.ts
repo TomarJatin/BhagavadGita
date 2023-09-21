@@ -58,5 +58,9 @@ export const translations = {
   lastRead: {
     english: "Last read",
     hindi: "आखिरी बार पढ़ा"
+  },
+  author: {
+    english: "Author",
+    hindi: "लेखक"
   }
 };

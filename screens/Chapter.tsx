@@ -20,11 +20,14 @@ import { Chapters } from "../data/chapters";
 import { Verses } from "../data/verses";
 import { ChapterContext } from "../contexts/ChapterContext";
 import { VerseContext } from "../contexts/VerseContext";
+import { translations } from "../translations/main";
+import { SettingsContext } from "../contexts/SettingsContext";
 
 export default function Chapter({ navigation }) {
   const { theme } = useContext(ThemeContext);
   const { selectedChapter } = useContext(ChapterContext);
   const { setSelectedVerse } = useContext(VerseContext);
+  const {language} = useContext(SettingsContext);
   const Color = color(theme);
   const Icons = icons(theme);
 
@@ -81,7 +84,7 @@ export default function Chapter({ navigation }) {
                         fontWeight: "600",
                       }}
                     >
-                      CHAPTER {selectedChapter}
+                      {translations.chapter[language]} {selectedChapter}
                     </Text>
                     <Image
                       style={{ width: 20, height: 20 }}
@@ -98,7 +101,7 @@ export default function Chapter({ navigation }) {
                       textAlign: "center",
                     }}
                   >
-                    {Chapters[selectedChapter - 1].name}
+                    {language === "english"? Chapters[selectedChapter - 1].name_translated: Chapters[selectedChapter - 1].name}
                   </Text>
                 </View>
                 <Text
@@ -107,9 +110,10 @@ export default function Chapter({ navigation }) {
                     fontSize: FontSize.regular12px,
                     color: Color.fontPrim,
                     fontWeight: "400",
+                    lineHeight: 20
                   }}
                 >
-                  {Chapters[selectedChapter - 1].chapter_summary_hindi}
+                  {language === "english" ? Chapters[selectedChapter - 1].chapter_summary: Chapters[selectedChapter - 1].chapter_summary_hindi}
                 </Text>
               </View>
               <FlatList
@@ -146,7 +150,7 @@ export default function Chapter({ navigation }) {
                             fontWeight: "600",
                           }}
                         >
-                          Verse {item.verse_number}
+                          {translations.Verse[language]} {item.verse_number}
                         </Text>
                       </View>
                       <Image

@@ -8,13 +8,16 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { FontSize, color } from "../GlobalStyles";
 import { Image } from "expo-image";
 import { icons } from "../styles/Icon";
+import { translations } from "../translations/main";
 import { FlatList } from "react-native-gesture-handler";
 import { Chapters } from "../data/chapters";
 import { ChapterContext } from "../contexts/ChapterContext";
+import { SettingsContext } from "../contexts/SettingsContext";
 
 export default function HomeScreen({ navigation }) {
   const { theme } = useContext(ThemeContext);
   const {setSelectedChapter} = useContext(ChapterContext);
+  const {language} = useContext(SettingsContext);
   const Color = color(theme);
   const Icons = icons(theme);
 
@@ -56,7 +59,7 @@ export default function HomeScreen({ navigation }) {
                   fontFamily: "Inter_700Bold",
                 }}
               >
-                Chapters
+                {translations.chapters[language]}
               </Text>
               <View
                 style={{
@@ -110,7 +113,7 @@ export default function HomeScreen({ navigation }) {
                             fontWeight: "500",
                           }}
                         >
-                          {item?.name}
+                          {language === "english" ? item?.name_translated: item?.name}
                         </Text>
                         <View
                           style={{
@@ -135,7 +138,7 @@ export default function HomeScreen({ navigation }) {
                               color: Color.fontSecondary,
                             }}
                           >
-                            {item?.verses_count} verses
+                            {item?.verses_count} {translations.verses[language]}
                           </Text>
                         </View>
                       </View>

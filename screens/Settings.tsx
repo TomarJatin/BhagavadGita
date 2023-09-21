@@ -7,6 +7,7 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { FontSize, color } from "../GlobalStyles";
 import { icons } from "../styles/Icon";
 import Modal from "react-native-modal";
+import { translations } from "../translations/main";
 import { SettingsContext } from "../contexts/SettingsContext";
 
 export default function Settings({ navigation }) {
