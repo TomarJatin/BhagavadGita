@@ -18,7 +18,7 @@ export const FontSize = {
 /* Colors */
 export const color = (theme) => ({
   backgroundColor: theme === 'light' ? "#fff": '#181818',
-  topbarColor: theme === 'light' ? '#5D2EC0': '#5D2EC0',
+  topbarColor: theme === 'light' ? '#FF5F04': '#FF5F04',
   fontWhite: '#fff',
   fontPrim: '#000000',
   borderColorSecondary: '#DCDCDC',
