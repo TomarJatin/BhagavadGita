@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Topbar from "../components/Topbar";
 import Navbar from "../components/Navbar";
@@ -40,13 +40,16 @@ export default function HomeScreen({ navigation }) {
             <View
               style={{
                 padding: 15,
+                width: "100%", height: Dimensions.get("window").height*0.29
               }}
             >
-              <Image
-                style={{ width: "100%", height: 160, borderRadius: 10 }}
-                contentFit="cover"
-                source={Icons.verseOfTheDay}
-              />
+              <ImageBackground
+                style={{ width: "100%", height: Dimensions.get("window").height*0.26}} 
+                imageStyle={{ borderRadius: 10}}
+                resizeMode="contain"
+                source={{uri: "https://cdn.pixabay.com/photo/2023/06/23/08/51/lord-krishna-8083043_1280.png"}}
+              >
+              </ImageBackground>
             </View>
 
             {/* Chapters */}
@@ -161,7 +164,7 @@ export default function HomeScreen({ navigation }) {
         keyExtractor={(item) => item}
       />
 
-      {/* <Navbar nav={"home"}/> */}
+      <Navbar nav={"home"}/>
     </SafeAreaView>
   );
 }

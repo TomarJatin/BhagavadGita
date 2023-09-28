@@ -8,6 +8,11 @@ import { FontSize, color } from "../GlobalStyles";
 import { icons } from "../styles/Icon";
 import Modal from "react-native-modal";
 import { translations } from "../translations/main";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { SettingsContext } from "../contexts/SettingsContext";
 
 export default function Settings({ navigation }) {
@@ -21,7 +26,7 @@ export default function Settings({ navigation }) {
     wordMeaningOn,
     setLanguage,
     handleSwitchButtonChange,
-    setAuthorsList
+    setAuthorsList,
   } = useContext(SettingsContext);
   const [open, setOpen] = useState("");
   const allTranslationsAuthors = [
@@ -58,20 +63,20 @@ export default function Settings({ navigation }) {
   const Icons = icons(theme);
 
   const isAuthorSelected = (author: {
-    author_name: string,
-    language: string
+    author_name: string;
+    language: string;
   }) => {
-    return authorsList.some((item) => item.author_name === author.author_name)
-  }
+    return authorsList.some((item) => item.author_name === author.author_name);
+  };
 
   const findSelectedAuthorIndex = (author: {
-    author_name: string,
-    language: string
+    author_name: string;
+    language: string;
   }) => {
-    return authorsList.findIndex((item) => item.author_name === author.author_name)
-  }
-
-  
+    return authorsList.findIndex(
+      (item) => item.author_name === author.author_name
+    );
+  };
 
   return (
     <>
@@ -128,14 +133,7 @@ export default function Settings({ navigation }) {
                       gap: 20,
                     }}
                   >
-                    <Image
-                      style={{
-                        width: 30,
-                        height: 30,
-                      }}
-                      contentFit="cover"
-                      source={Icons.language}
-                    />
+                    <Entypo name="language" size={24} color="black" />
                     <View>
                       <Text
                         style={{
@@ -180,14 +178,7 @@ export default function Settings({ navigation }) {
                       gap: 20,
                     }}
                   >
-                    <Image
-                      style={{
-                        width: 30,
-                        height: 30,
-                      }}
-                      contentFit="cover"
-                      source={Icons.commentary}
-                    />
+                    <FontAwesome name="comments-o" size={24} color="black" />
                     <View>
                       <Text
                         style={{
@@ -236,14 +227,7 @@ export default function Settings({ navigation }) {
                       gap: 20,
                     }}
                   >
-                    <Image
-                      style={{
-                        width: 30,
-                        height: 30,
-                      }}
-                      contentFit="cover"
-                      source={Icons.wordMeaning}
-                    />
+                    <MaterialCommunityIcons name="book-search" size={24} color="black" />
                     <View>
                       <Text
                         style={{
@@ -292,14 +276,8 @@ export default function Settings({ navigation }) {
                       gap: 20,
                     }}
                   >
-                    <Image
-                      style={{
-                        width: 30,
-                        height: 30,
-                      }}
-                      contentFit="cover"
-                      source={Icons.translations}
-                    />
+                    <Ionicons name="language" size={24} color="black" />
+
                     <View>
                       <Text
                         style={{
@@ -348,14 +326,7 @@ export default function Settings({ navigation }) {
                       gap: 20,
                     }}
                   >
-                    <Image
-                      style={{
-                        width: 30,
-                        height: 30,
-                      }}
-                      contentFit="cover"
-                      source={Icons.transliterations}
-                    />
+                    <FontAwesome name="language" size={24} color="black" />
                     <View>
                       <Text
                         style={{
@@ -406,14 +377,7 @@ export default function Settings({ navigation }) {
                       gap: 20,
                     }}
                   >
-                    <Image
-                      style={{
-                        width: 30,
-                        height: 30,
-                      }}
-                      contentFit="cover"
-                      source={Icons.author}
-                    />
+                    <FontAwesome5 name="book-reader" size={24} color="black" />
                     <View>
                       <Text
                         style={{
@@ -475,58 +439,56 @@ export default function Settings({ navigation }) {
                 padding: 22,
               }}
             >
-              <FlatList 
-              data={allTranslationsAuthors.filter((item) => {
-                return item?.language === language
-              })}
-              renderItem={({item, index}) => (
-                <TouchableOpacity
-                key={index}
-                onPress={() => {
-                  if(isAuthorSelected(item)){
-                    const index = findSelectedAuthorIndex(item);
-                    const _list = authorsList;
-                    _list.splice(index, 1);
-                    setAuthorsList([..._list])
-                  }
-                  else{
-                    const _list = authorsList;
-                  _list.push(item);
-                  setAuthorsList([..._list]);
-                  }
-                }}
-                activeOpacity={0.7}
-                style={{
-                  padding: 15,
-                  width: "100%",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: FontSize.regular12px,
-                    fontWeight: "500",
-                    color: Color.fontPrim,
-                  }}
-                >
-                  {item?.author_name}
-                </Text>
-                <View
-                  style={{
-                    width: 16,
-                    height: 16,
-                    borderRadius: 8,
-                    borderWidth: isAuthorSelected(item) ? 0 : 1,
-                    backgroundColor:
-                    isAuthorSelected(item)
-                        ? Color.checkBoxActiveColor
-                        : Color.backgroundColor,
-                  }}
-                />
-              </TouchableOpacity>
-              )}
+              <FlatList
+                data={allTranslationsAuthors.filter((item) => {
+                  return item?.language === language;
+                })}
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                      if (isAuthorSelected(item)) {
+                        const index = findSelectedAuthorIndex(item);
+                        const _list = authorsList;
+                        _list.splice(index, 1);
+                        setAuthorsList([..._list]);
+                      } else {
+                        const _list = authorsList;
+                        _list.push(item);
+                        setAuthorsList([..._list]);
+                      }
+                    }}
+                    activeOpacity={0.7}
+                    style={{
+                      padding: 15,
+                      width: "100%",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: FontSize.regular12px,
+                        fontWeight: "500",
+                        color: Color.fontPrim,
+                      }}
+                    >
+                      {item?.author_name}
+                    </Text>
+                    <View
+                      style={{
+                        width: 16,
+                        height: 16,
+                        borderRadius: 8,
+                        borderWidth: isAuthorSelected(item) ? 0 : 1,
+                        backgroundColor: isAuthorSelected(item)
+                          ? Color.checkBoxActiveColor
+                          : Color.backgroundColor,
+                      }}
+                    />
+                  </TouchableOpacity>
+                )}
               />
             </View>
           )}
