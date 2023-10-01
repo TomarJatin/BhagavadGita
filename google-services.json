@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "536029625409",
+    "project_id": "bhagavadgita-f1b48",
+    "storage_bucket": "bhagavadgita-f1b48.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536029625409:android:928c401968f2a8f1265ac0",
+        "android_client_info": {
+          "package_name": "com.tomarjatin.BhagavadGita"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmSMVHL8bOWS6hy482YOT4bzDGQgS20sY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
