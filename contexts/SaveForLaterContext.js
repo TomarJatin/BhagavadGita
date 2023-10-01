@@ -11,6 +11,12 @@ const SaveForLaterContext = createContext();
 const SaveForLaterProvider = ({ children }) => {
   const [saveForLater, setSaveForLater] = useState([]);
 
+  // {
+  //   verseId: 2,
+  //   chapterId: 4,
+  //   verse: ""
+  // }
+
   useEffect(() => {
     console.log("save for later context changed ========================");
   });

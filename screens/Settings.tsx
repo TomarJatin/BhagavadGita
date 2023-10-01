@@ -8,7 +8,7 @@ import { FontSize, color } from "../GlobalStyles";
 import { icons } from "../styles/Icon";
 import Modal from "react-native-modal";
 import { translations } from "../translations/main";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -25,40 +25,12 @@ export default function Settings({ navigation }) {
     authorsList,
     wordMeaningOn,
     setLanguage,
+    handleAutoAuthorListFill,
     handleSwitchButtonChange,
     setAuthorsList,
+    allTranslationsAuthors,
   } = useContext(SettingsContext);
   const [open, setOpen] = useState("");
-  const allTranslationsAuthors = [
-    {
-      author_name: "Swami Adidevananda",
-      language: "english",
-    },
-    {
-      author_name: "Swami Gambirananda",
-      language: "english",
-    },
-    {
-      author_name: "Swami Ramsukhdas",
-      language: "hindi",
-    },
-    {
-      author_name: "Swami Tejomayananda",
-      language: "hindi",
-    },
-    {
-      author_name: "Swami Sivananda",
-      language: "english",
-    },
-    {
-      author_name: "Dr. S. Sankaranarayan",
-      language: "english",
-    },
-    {
-      author_name: "Shri Purohit Swami",
-      language: "english",
-    },
-  ];
   const Color = color(theme);
   const Icons = icons(theme);
 
@@ -227,7 +199,11 @@ export default function Settings({ navigation }) {
                       gap: 20,
                     }}
                   >
-                    <MaterialCommunityIcons name="book-search" size={24} color="black" />
+                    <MaterialCommunityIcons
+                      name="book-search"
+                      size={24}
+                      color="black"
+                    />
                     <View>
                       <Text
                         style={{
@@ -500,7 +476,10 @@ export default function Settings({ navigation }) {
               }}
             >
               <TouchableOpacity
-                onPress={() => setLanguage("english")}
+                onPress={() => {
+                  setLanguage("english");
+                  handleAutoAuthorListFill("english");
+                }}
                 activeOpacity={0.7}
                 style={{
                   padding: 15,
@@ -533,7 +512,10 @@ export default function Settings({ navigation }) {
                 />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => setLanguage("hindi")}
+                onPress={() => {
+                  setLanguage("hindi");
+                  handleAutoAuthorListFill("hindi");
+                }}
                 activeOpacity={0.7}
                 style={{
                   padding: 15,
