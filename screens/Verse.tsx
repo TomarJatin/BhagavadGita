@@ -35,7 +35,7 @@ type translationType = {
 
 export default function Verse({ navigation }) {
   const { theme } = useContext(ThemeContext);
-  const { saveForLater, setSaveForLater } = useContext(SaveForLaterContext);
+  const { saveForLater, setSaveForLater, setSaveForLaterStorage } = useContext(SaveForLaterContext);
   const { selectedChapter } = useContext(ChapterContext);
   const { selectedVerse } = useContext(VerseContext);
   const {
@@ -103,6 +103,7 @@ export default function Verse({ navigation }) {
       });
       setSaveForLater([..._saveForLater]);
     }
+    setSaveForLaterStorage();
   };
 
   useEffect(() => {

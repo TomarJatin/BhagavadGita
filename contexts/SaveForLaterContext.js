@@ -11,6 +11,29 @@ const SaveForLaterContext = createContext();
 const SaveForLaterProvider = ({ children }) => {
   const [saveForLater, setSaveForLater] = useState([]);
 
+  const getSaveForLater = async () => {
+    const _saveForLater = await AsyncStorage.getItem("saveForLater");
+    if(_saveForLater){
+      setSaveForLater([...JSON.parse(_saveForLater)]);
+    }
+  };
+
+  const setSaveForLaterStorage = async () => {
+    AsyncStorage.setItem(
+      "saveForLater",
+      JSON.stringify(saveForLater),
+      (err) => {
+        if (err) {
+          console.log("an error");
+          throw err;
+        }
+        console.log("successfully save for later");
+      }
+    ).catch((err) => {
+      console.log("error is: " + err);
+    });
+  };
+
   // {
   //   verseId: 2,
   //   chapterId: 4,
@@ -21,11 +44,13 @@ const SaveForLaterProvider = ({ children }) => {
     console.log("save for later context changed ========================");
   });
 
-
   return (
     <SaveForLaterContext.Provider
       value={{
-        saveForLater, setSaveForLater
+        saveForLater,
+        setSaveForLater,
+        getSaveForLater,
+        setSaveForLaterStorage,
       }}
     >
       {children}

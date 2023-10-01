@@ -12,12 +12,19 @@ import Quotes from "../../screens/Quotes";
 import QuickStart from "../../screens/QuickStart";
 import AIBot from "../../screens/AIBot";
 import { NavigationContainer } from "@react-navigation/native";
+import { SaveForLaterContext } from "../../contexts/SaveForLaterContext";
 
 
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function Route() {
+  const {getSaveForLater} = React.useContext(SaveForLaterContext);
+
+  useEffect(() => {
+    getSaveForLater();
+  }, [])
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
