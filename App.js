@@ -14,6 +14,7 @@ import { ChapterProvider } from "./contexts/ChapterContext";
 import { VerseProvider } from "./contexts/VerseContext";
 import { SaveForLaterProvider } from "./contexts/SaveForLaterContext";
 import { SettingsProvider } from "./contexts/SettingsContext";
+import "expo-dev-client";
 
 function App() {
   let [fontsLoaded] = useFonts({
