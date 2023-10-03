@@ -12,6 +12,7 @@ export const FontSize = {
   regular13px: RFValue(13),
   regular14px: RFValue(14),
   regular16px: RFValue(16),
+  regular18px: RFValue(18),
   small9px: RFValue(9)
 };
 
