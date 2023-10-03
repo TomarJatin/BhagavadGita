@@ -12,6 +12,7 @@ import Topbar from "../components/Topbar";
 import Navbar from "../components/Navbar";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
+import GestureRecognizer from 'react-native-swipe-gestures';
 import { FontSize, color } from "../GlobalStyles";
 import { Image } from "expo-image";
 import { icons } from "../styles/Icon";
@@ -25,15 +26,44 @@ import { SettingsContext } from "../contexts/SettingsContext";
 
 export default function Chapter({ navigation }) {
   const { theme } = useContext(ThemeContext);
-  const { selectedChapter } = useContext(ChapterContext);
+  const { selectedChapter, setSelectedChapter } = useContext(ChapterContext);
   const { setSelectedVerse } = useContext(VerseContext);
   const {language} = useContext(SettingsContext);
   const Color = color(theme);
   const Icons = icons(theme);
 
+  const onSwipeLeft = () => {
+    if (selectedChapter < 18) {
+      setSelectedChapter(selectedChapter + 1);
+    }
+    else{
+      setSelectedChapter(1);
+    }
+  };
+
+  const onSwipeRight = () => {
+    if (selectedChapter > 1) {
+      setSelectedChapter(selectedChapter - 1);
+    }
+    else{
+      setSelectedChapter(18);
+    }
+  };
+
+  const config = {
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80,
+  };
+
   return React.useMemo(
     () => (
-      <SafeAreaView>
+      <GestureRecognizer
+        onSwipeLeft={onSwipeLeft}
+        onSwipeRight={onSwipeRight}
+        config={config}
+        style={{ flex: 1}}
+      >
+        <SafeAreaView>
         <ImageBackground
           source={Icons.krishnaBg}
           resizeMode="contain"
@@ -179,6 +209,8 @@ export default function Chapter({ navigation }) {
           }}
         />
       </SafeAreaView>
+      </GestureRecognizer>
+      
     ),
     [selectedChapter, theme]
   );
