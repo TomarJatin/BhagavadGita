@@ -57,7 +57,7 @@ export default function Quotes({ navigation }) {
         config={config}
         style={{ flex: 1}}
       >
-        <ImageBackground source={{ uri: backgroundWallpaper[3] }}
+        <ImageBackground source={{ uri: backgroundWallpaper[6] }}
           resizeMode="cover" style={{
             width: Dimensions.get("window").width,
             height: Dimensions.get("window").height,

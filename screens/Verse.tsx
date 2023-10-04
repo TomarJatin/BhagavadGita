@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Topbar from "../components/Topbar";
 import Navbar from "../components/Navbar";
 import { useContext } from "react";
+import GestureRecognizer from 'react-native-swipe-gestures';
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { ThemeContext } from "../contexts/ThemeContext";
@@ -37,7 +38,7 @@ export default function Verse({ navigation }) {
   const { theme } = useContext(ThemeContext);
   const { saveForLater, setSaveForLater, setSaveForLaterStorage } = useContext(SaveForLaterContext);
   const { selectedChapter } = useContext(ChapterContext);
-  const { selectedVerse } = useContext(VerseContext);
+  const { selectedVerse, setSelectedVerse } = useContext(VerseContext);
   const {
     language,
     commentryOn,
@@ -46,9 +47,25 @@ export default function Verse({ navigation }) {
     authorsList,
     wordMeaningOn,
   } = useContext(SettingsContext);
-  const [saved, setSaved] = useState(false);
   const Color = color(theme);
   const Icons = icons(theme);
+
+  const onSwipeLeft = () => {
+    if (selectedVerse < Verses[selectedChapter].length) {
+      setSelectedVerse(selectedVerse + 1);
+    }
+  };
+
+  const onSwipeRight = () => {
+    if (selectedVerse > 1) {
+      setSelectedVerse(selectedVerse - 1);
+    }
+  };
+
+  const config = {
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80,
+  };
 
   const isAuthorSelected = (author: {
     author_name: string;
@@ -120,7 +137,13 @@ export default function Verse({ navigation }) {
 
   return React.useMemo(
     () => (
-      <SafeAreaView>
+      <GestureRecognizer
+        onSwipeLeft={onSwipeLeft}
+        onSwipeRight={onSwipeRight}
+        config={config}
+        style={{ flex: 1}}
+      >
+        <SafeAreaView>
         <ImageBackground
           source={Icons.krishnaBg}
           resizeMode="contain"
@@ -446,6 +469,8 @@ export default function Verse({ navigation }) {
           }}
         />
       </SafeAreaView>
+      </GestureRecognizer>
+      
     ),
     [selectedChapter, theme, selectedVerse, saveForLater]
   );
