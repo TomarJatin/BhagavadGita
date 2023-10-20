@@ -10,8 +10,8 @@ import {
 } from "@expo-google-fonts/inter";
 import Route from "./navigation/home";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { ChapterProvider } from "./contexts/ChapterContext";
-import { VerseProvider } from "./contexts/VerseContext";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 import { SaveForLaterProvider } from "./contexts/SaveForLaterContext";
 import { SettingsProvider } from "./contexts/SettingsContext";
 import "expo-dev-client";
@@ -31,17 +31,15 @@ function App() {
   }
 
   return (
-    <ThemeProvider>
-      <ChapterProvider>
-        <VerseProvider>
+    <Provider store={store}>
+      <ThemeProvider>
           <SaveForLaterProvider>
             <SettingsProvider>
               <Route />
             </SettingsProvider>
           </SaveForLaterProvider>
-        </VerseProvider>
-      </ChapterProvider>
     </ThemeProvider>
+    </Provider>
   );
 }
 

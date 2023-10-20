@@ -21,11 +21,11 @@ import { icons } from "../styles/Icon";
 import { FlatList } from "react-native-gesture-handler";
 import { Chapters } from "../data/chapters";
 import { Verses } from "../data/verses";
-import { ChapterContext } from "../contexts/ChapterContext";
 import { VerseContext } from "../contexts/VerseContext";
 import { translations } from "../translations/main";
 import { SettingsContext } from "../contexts/SettingsContext";
 import { SaveForLaterContext } from "../contexts/SaveForLaterContext";
+import { useDispatch, useSelector } from "react-redux";
 
 type translationType = {
   id: number;
@@ -36,8 +36,9 @@ type translationType = {
 
 export default function Verse({ navigation }) {
   const { theme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
   const { saveForLater, setSaveForLater, setSaveForLaterStorage } = useContext(SaveForLaterContext);
-  const { selectedChapter } = useContext(ChapterContext);
+  const selectedChapter = useSelector((state: any) => state.chapter.selectedChapter);
   const { selectedVerse, setSelectedVerse } = useContext(VerseContext);
   const {
     language,

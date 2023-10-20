@@ -11,7 +11,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import { VerseContext } from '../contexts/VerseContext';
 import { translations } from "../translations/main";
 import { Entypo } from '@expo/vector-icons';
-import { ChapterContext } from '../contexts/ChapterContext';
 import { backgroundWallpaper } from '../data/backgroundWallpaper';
 import { bhagavadGitaQuotes } from '../data/quotes';
 import GestureRecognizer from 'react-native-swipe-gestures';

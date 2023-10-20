@@ -18,14 +18,15 @@ import { icons } from "../styles/Icon";
 import { translations } from "../translations/main";
 import { FlatList } from "react-native-gesture-handler";
 import { Chapters } from "../data/chapters";
-import { ChapterContext } from "../contexts/ChapterContext";
 import { SettingsContext } from "../contexts/SettingsContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedChapter } from "../redux/slices/ChapterSlice";
 import Carousel from "react-native-reanimated-carousel";
 
 export default function HomeScreen({ navigation }) {
   const { theme } = useContext(ThemeContext);
-  const { setSelectedChapter } = useContext(ChapterContext);
   const { language } = useContext(SettingsContext);
+  const dispatch = useDispatch();
   const Color = color(theme);
   const Icons = icons(theme);
   const width = Dimensions.get("window").width;
@@ -43,6 +44,10 @@ export default function HomeScreen({ navigation }) {
       backgroundColor: Color.backgroundColor,
     },
   });
+
+  const handleSetSelectedChapter = (chapter: any) => {
+    dispatch(setSelectedChapter(chapter));
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -128,7 +133,7 @@ export default function HomeScreen({ navigation }) {
                       renderItem={({ item, index }) => (
                         <TouchableOpacity
                           onPress={() => {
-                            setSelectedChapter(item?.chapter_number);
+                            handleSetSelectedChapter(item?.chapter_number);
                             navigation.navigate("Chapter");
                           }}
                           activeOpacity={0.7}

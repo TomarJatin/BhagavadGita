@@ -6,20 +6,12 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import Slider from "react-native-slider";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Navbar from "../components/Navbar";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { FontSize, color } from "../GlobalStyles";
 import { Audio } from "expo-av";
-import { Image } from "expo-image";
-import { SaveForLaterContext } from "../contexts/SaveForLaterContext";
-import { SettingsContext } from "../contexts/SettingsContext";
-import { VerseContext } from "../contexts/VerseContext";
-import { translations } from "../translations/main";
-import { Entypo } from "@expo/vector-icons";
 import storage from "@react-native-firebase/storage";
-import { ChapterContext } from "../contexts/ChapterContext";
 
 interface Audiobook {
   id: string;

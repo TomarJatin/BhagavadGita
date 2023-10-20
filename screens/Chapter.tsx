@@ -19,14 +19,16 @@ import { icons } from "../styles/Icon";
 import { FlatList } from "react-native-gesture-handler";
 import { Chapters } from "../data/chapters";
 import { Verses } from "../data/verses";
-import { ChapterContext } from "../contexts/ChapterContext";
 import { VerseContext } from "../contexts/VerseContext";
 import { translations } from "../translations/main";
 import { SettingsContext } from "../contexts/SettingsContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedChapter } from "../redux/slices/ChapterSlice";
 
 export default function Chapter({ navigation }) {
   const { theme } = useContext(ThemeContext);
-  const { selectedChapter, setSelectedChapter } = useContext(ChapterContext);
+  const dispatch = useDispatch();
+  const selectedChapter = useSelector((state: any) => state.chapter.selectedChapter);
   const { setSelectedVerse } = useContext(VerseContext);
   const {language} = useContext(SettingsContext);
   const Color = color(theme);
@@ -34,20 +36,24 @@ export default function Chapter({ navigation }) {
 
   const onSwipeLeft = () => {
     if (selectedChapter < 18) {
-      setSelectedChapter(selectedChapter + 1);
+      handleSetSelectedChapter(selectedChapter + 1);
     }
     else{
-      setSelectedChapter(1);
+      handleSetSelectedChapter(1);
     }
   };
 
   const onSwipeRight = () => {
     if (selectedChapter > 1) {
-      setSelectedChapter(selectedChapter - 1);
+      handleSetSelectedChapter(selectedChapter-1);
     }
     else{
-      setSelectedChapter(18);
+      handleSetSelectedChapter(18);
     }
+  };
+
+  const handleSetSelectedChapter = (chapter: any) => {
+    dispatch(setSelectedChapter(chapter));
   };
 
   const config = {

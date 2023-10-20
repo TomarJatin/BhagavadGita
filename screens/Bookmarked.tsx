@@ -7,18 +7,26 @@ import { FontSize, color } from "../GlobalStyles";
 import { Image } from "expo-image";
 import { SaveForLaterContext } from '../contexts/SaveForLaterContext';
 import { SettingsContext } from '../contexts/SettingsContext';
-import { VerseContext } from '../contexts/VerseContext';
 import { translations } from "../translations/main";
 import { Entypo } from '@expo/vector-icons';
-import { ChapterContext } from '../contexts/ChapterContext';
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedChapter } from "../redux/slices/ChapterSlice";
+import { setSelectedVerse } from "../redux/slices/VerseSlice";
 
 export default function Bookmarked({navigation}) {
   const { theme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
   const {saveForLater} = useContext(SaveForLaterContext);
   const {language} = useContext(SettingsContext);
-  const { setSelectedVerse } = useContext(VerseContext);
-  const {setSelectedChapter} = useContext(ChapterContext);
   const Color = color(theme);
+
+  const handleSetSelectedChapter = (chapter: any) => {
+    dispatch(setSelectedChapter(chapter));
+  };
+
+  const handleSetSelectedVerses = (verse: any) => {
+    dispatch(setSelectedVerse(verse));
+  };
 
   return (
     <SafeAreaView>
@@ -34,8 +42,8 @@ export default function Bookmarked({navigation}) {
               renderItem={({item}) => (
                 <TouchableOpacity
                     onPress={() => {
-                      setSelectedVerse(item?.verseId);
-                      setSelectedChapter(item?.chapterId);
+                      handleSetSelectedVerses(item?.verseId);
+                      handleSetSelectedChapter(item?.chapterId);
                       navigation.navigate("Verse");
                     }}
 
