@@ -9,11 +9,9 @@ import {
   Inter_300Light,
 } from "@expo-google-fonts/inter";
 import Route from "./navigation/home";
-import { ThemeProvider } from "./contexts/ThemeContext";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { SaveForLaterProvider } from "./contexts/SaveForLaterContext";
-import { SettingsProvider } from "./contexts/SettingsContext";
 import "expo-dev-client";
 
 function App() {
@@ -32,13 +30,9 @@ function App() {
 
   return (
     <Provider store={store}>
-      <ThemeProvider>
           <SaveForLaterProvider>
-            <SettingsProvider>
               <Route />
-            </SettingsProvider>
           </SaveForLaterProvider>
-    </ThemeProvider>
     </Provider>
   );
 }

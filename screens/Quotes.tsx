@@ -2,23 +2,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Dimensions, ImageBackground } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Navbar from "../components/Navbar";
-import { ThemeContext } from "../contexts/ThemeContext";
+import { useDispatch, useSelector } from "react-redux";
 import { FontSize, color } from "../GlobalStyles";
 import { Image } from "expo-image";
 import { SaveForLaterContext } from '../contexts/SaveForLaterContext';
-import { SettingsContext } from '../contexts/SettingsContext';
 import { FontAwesome } from '@expo/vector-icons';
-import { VerseContext } from '../contexts/VerseContext';
-import { translations } from "../translations/main";
-import { Entypo } from '@expo/vector-icons';
 import { backgroundWallpaper } from '../data/backgroundWallpaper';
 import { bhagavadGitaQuotes } from '../data/quotes';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 export default function Quotes({ navigation }) {
   const [currIdx, setCurrIdx] = useState(0);
-  const { theme } = useContext(ThemeContext);
-  const { language } = useContext(SettingsContext);
+  const theme = useSelector((state: any) => state.theme.theme);
+  const language = useSelector((state: any) => state.settings.language);
   const Color = color(theme);
 
   const onSwipeLeft = () => {

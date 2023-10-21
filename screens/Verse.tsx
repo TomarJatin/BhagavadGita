@@ -14,18 +14,16 @@ import { useContext } from "react";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import { ThemeContext } from "../contexts/ThemeContext";
 import { FontSize, color } from "../GlobalStyles";
 import { Image } from "expo-image";
 import { icons } from "../styles/Icon";
 import { FlatList } from "react-native-gesture-handler";
 import { Chapters } from "../data/chapters";
 import { Verses } from "../data/verses";
-import { VerseContext } from "../contexts/VerseContext";
 import { translations } from "../translations/main";
-import { SettingsContext } from "../contexts/SettingsContext";
 import { SaveForLaterContext } from "../contexts/SaveForLaterContext";
 import { useDispatch, useSelector } from "react-redux";
+import { setSelectedVerse } from "../redux/slices/VerseSlice";
 
 type translationType = {
   id: number;
@@ -35,11 +33,11 @@ type translationType = {
 };
 
 export default function Verse({ navigation }) {
-  const { theme } = useContext(ThemeContext);
+  const theme = useSelector((state: any) => state.theme.theme);
   const dispatch = useDispatch();
   const { saveForLater, setSaveForLater, setSaveForLaterStorage } = useContext(SaveForLaterContext);
   const selectedChapter = useSelector((state: any) => state.chapter.selectedChapter);
-  const { selectedVerse, setSelectedVerse } = useContext(VerseContext);
+  const selectedVerse = useSelector((state: any) => state.verse.selectedVerse);
   const {
     language,
     commentryOn,
@@ -47,21 +45,27 @@ export default function Verse({ navigation }) {
     transliteration,
     authorsList,
     wordMeaningOn,
-  } = useContext(SettingsContext);
+  } = useSelector((state: any) => state.settings);
   const Color = color(theme);
   const Icons = icons(theme);
 
+  const handleSetSelectedVerses = (verse: any) => {
+    dispatch(setSelectedVerse(verse));
+  };
+
   const onSwipeLeft = () => {
     if (selectedVerse < Verses[selectedChapter].length) {
-      setSelectedVerse(selectedVerse + 1);
+      handleSetSelectedVerses(selectedVerse + 1);
     }
   };
 
   const onSwipeRight = () => {
     if (selectedVerse > 1) {
-      setSelectedVerse(selectedVerse - 1);
+      handleSetSelectedVerses(selectedVerse - 1);
     }
   };
+
+  
 
   const config = {
     velocityThreshold: 0.3,

@@ -5,11 +5,61 @@ const settingsSlice = createSlice({
   initialState: {
     language: "english",
     commentryOn: true,
-    wordMeaningOn: true,
+    wordMeaningOn: false,
     translationOn: true,
     transliteration: true,
-    authorsList: [],
-    allTranslationsAuthors: [],
+    authorsList: [
+      {
+        author_name: "Swami Adidevananda",
+        language: "english",
+      },
+      {
+        author_name: "Swami Gambirananda",
+        language: "english",
+      },
+      {
+        author_name: "Swami Sivananda",
+        language: "english",
+      },
+      {
+        author_name: "Dr. S. Sankaranarayan",
+        language: "english",
+      },
+      {
+        author_name: "Shri Purohit Swami",
+        language: "english",
+      },
+    ],
+    allTranslationsAuthors: [
+      {
+        author_name: "Swami Adidevananda",
+        language: "english",
+      },
+      {
+        author_name: "Swami Gambirananda",
+        language: "english",
+      },
+      {
+        author_name: "Swami Ramsukhdas",
+        language: "hindi",
+      },
+      {
+        author_name: "Swami Tejomayananda",
+        language: "hindi",
+      },
+      {
+        author_name: "Swami Sivananda",
+        language: "english",
+      },
+      {
+        author_name: "Dr. S. Sankaranarayan",
+        language: "english",
+      },
+      {
+        author_name: "Shri Purohit Swami",
+        language: "english",
+      },
+    ],
   },
   reducers: {
     setLanguage(state, action) {

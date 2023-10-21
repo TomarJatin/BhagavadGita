@@ -3,15 +3,14 @@ import { View, Text, Dimensions, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { useSelector } from "react-redux";
 import { FontSize, color } from "../GlobalStyles";
 
 import { useNavigation } from "@react-navigation/core";
-import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function Navbar(props: { nav: string }) {
   const navigation = useNavigation();
-  const {theme} = useContext(ThemeContext);
+  const theme = useSelector((state: any) => state.theme.theme);
   const Color = color(theme);
 
   return (

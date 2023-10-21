@@ -11,21 +11,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Topbar from "../components/Topbar";
 import Navbar from "../components/Navbar";
 import { useContext } from "react";
-import { ThemeContext } from "../contexts/ThemeContext";
 import { FontSize, color } from "../GlobalStyles";
 import { Image } from "expo-image";
 import { icons } from "../styles/Icon";
 import { translations } from "../translations/main";
 import { FlatList } from "react-native-gesture-handler";
 import { Chapters } from "../data/chapters";
-import { SettingsContext } from "../contexts/SettingsContext";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedChapter } from "../redux/slices/ChapterSlice";
 import Carousel from "react-native-reanimated-carousel";
 
 export default function HomeScreen({ navigation }) {
-  const { theme } = useContext(ThemeContext);
-  const { language } = useContext(SettingsContext);
+  const theme = useSelector((state: any) => state.theme.theme);
+  const language = useSelector((state: any) => state.settings.language);
   const dispatch = useDispatch();
   const Color = color(theme);
   const Icons = icons(theme);

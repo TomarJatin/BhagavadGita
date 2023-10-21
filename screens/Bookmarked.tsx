@@ -2,11 +2,9 @@ import React, { useContext } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Navbar from "../components/Navbar";
-import { ThemeContext } from "../contexts/ThemeContext";
 import { FontSize, color } from "../GlobalStyles";
 import { Image } from "expo-image";
 import { SaveForLaterContext } from '../contexts/SaveForLaterContext';
-import { SettingsContext } from '../contexts/SettingsContext';
 import { translations } from "../translations/main";
 import { Entypo } from '@expo/vector-icons';
 import { useDispatch, useSelector } from "react-redux";
@@ -14,10 +12,10 @@ import { setSelectedChapter } from "../redux/slices/ChapterSlice";
 import { setSelectedVerse } from "../redux/slices/VerseSlice";
 
 export default function Bookmarked({navigation}) {
-  const { theme } = useContext(ThemeContext);
+  const theme = useSelector((state: any) => state.theme.theme);
   const dispatch = useDispatch();
   const {saveForLater} = useContext(SaveForLaterContext);
-  const {language} = useContext(SettingsContext);
+  const language = useSelector((state: any) => state.settings.language);
   const Color = color(theme);
 
   const handleSetSelectedChapter = (chapter: any) => {

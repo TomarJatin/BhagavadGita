@@ -11,7 +11,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Topbar from "../components/Topbar";
 import Navbar from "../components/Navbar";
 import { useContext } from "react";
-import { ThemeContext } from "../contexts/ThemeContext";
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { FontSize, color } from "../GlobalStyles";
 import { Image } from "expo-image";
@@ -19,18 +18,16 @@ import { icons } from "../styles/Icon";
 import { FlatList } from "react-native-gesture-handler";
 import { Chapters } from "../data/chapters";
 import { Verses } from "../data/verses";
-import { VerseContext } from "../contexts/VerseContext";
 import { translations } from "../translations/main";
-import { SettingsContext } from "../contexts/SettingsContext";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedChapter } from "../redux/slices/ChapterSlice";
+import { setSelectedVerse } from "../redux/slices/VerseSlice";
 
 export default function Chapter({ navigation }) {
-  const { theme } = useContext(ThemeContext);
+  const theme = useSelector((state: any) => state.theme.theme);
   const dispatch = useDispatch();
   const selectedChapter = useSelector((state: any) => state.chapter.selectedChapter);
-  const { setSelectedVerse } = useContext(VerseContext);
-  const {language} = useContext(SettingsContext);
+  const language = useSelector((state: any) => state.settings.language);
   const Color = color(theme);
   const Icons = icons(theme);
 
@@ -54,6 +51,10 @@ export default function Chapter({ navigation }) {
 
   const handleSetSelectedChapter = (chapter: any) => {
     dispatch(setSelectedChapter(chapter));
+  };
+
+  const handleSetSelectedVerses = (verse: any) => {
+    dispatch(setSelectedVerse(verse));
   };
 
   const config = {
@@ -157,7 +158,7 @@ export default function Chapter({ navigation }) {
                 renderItem={({ item, index }) => (
                   <TouchableOpacity
                     onPress={() => {
-                      setSelectedVerse(item?.verse_number);
+                      handleSetSelectedVerses(item?.verse_number);
                       navigation.navigate("Verse");
                     }}
 

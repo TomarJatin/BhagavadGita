@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Navbar from "../components/Navbar";
-import { ThemeContext } from "../contexts/ThemeContext";
+import { useSelector } from "react-redux";
 import { FontSize, color } from "../GlobalStyles";
 import { Audio } from "expo-av";
 import storage from "@react-native-firebase/storage";
@@ -29,7 +29,7 @@ export default function AudioBook({ navigation }) {
   const [currentPosition, setCurrentPosition] = useState<number | null>(null);
   const [totalDuration, setTotalDuration] = useState<number | null>(null);
   const [sliderValue, setSliderValue] = useState(0);
-  const { theme } = useContext(ThemeContext);
+  const theme = useSelector((state: any) => state.theme.theme);
   const Color = color(theme);
 
   useEffect(() => {

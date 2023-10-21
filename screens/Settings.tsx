@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Switch } from "react-native";
 import { Image } from "expo-image";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ThemeContext } from "../contexts/ThemeContext";
+import { useDispatch, useSelector } from "react-redux";
 import { FontSize, color } from "../GlobalStyles";
 import { icons } from "../styles/Icon";
 import Modal from "react-native-modal";
@@ -13,10 +13,16 @@ import { Entypo } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import { SettingsContext } from "../contexts/SettingsContext";
+import {setLanguage,
+  setCommentryOn,
+  setWordMeaningOn,
+  setTranslationOn,
+  setTransliterationOn,
+  setAuthorsList,} from "../redux/slices/SettingsSlice";
 
 export default function Settings({ navigation }) {
-  const { theme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  const theme = useSelector((state: any) => state.theme.theme);
   const {
     language,
     commentryOn,
@@ -24,12 +30,8 @@ export default function Settings({ navigation }) {
     transliteration,
     authorsList,
     wordMeaningOn,
-    setLanguage,
-    handleAutoAuthorListFill,
-    handleSwitchButtonChange,
-    setAuthorsList,
-    allTranslationsAuthors,
-  } = useContext(SettingsContext);
+    allTranslationsAuthors
+  } = useSelector((state: any) => state.settings);
   const [open, setOpen] = useState("");
   const Color = color(theme);
   const Icons = icons(theme);
@@ -49,6 +51,41 @@ export default function Settings({ navigation }) {
       (item) => item.author_name === author.author_name
     );
   };
+
+  const handleSetCommentryOn = (value: any) => {
+    dispatch(setCommentryOn(value));
+  };
+  const handleSetWordMeaningOn = (value: any) => {
+    dispatch(setWordMeaningOn(value));
+  };
+  const handleSetTranslationOn = (value: any) => {
+    dispatch(setTranslationOn(value));
+  };
+  const handleSetTransliterationOn = (value: any) => {
+    dispatch(setTransliterationOn(value));
+  };
+
+  const handleSetAuthorsList = (value: any) => {
+    dispatch(setAuthorsList(value));
+  };
+
+  const handleSetLanguage = (value: any) => {
+    dispatch(setLanguage(value));
+  };
+
+  const handleSwitchButtonChange = (value, key) => {
+    switch(key){
+        case "commentry": handleSetCommentryOn(value); return;
+        case "translation" : handleSetTranslationOn(value); return;
+        case "word meaining": handleSetWordMeaningOn(value); return;
+        case "transliteration": handleSetTransliterationOn(value); return; 
+    }
+  }
+
+  const handleAutoAuthorListFill = (_language: string) => {
+    const _list = allTranslationsAuthors.filter((item) => (item.language === _language))
+    handleSetAuthorsList([..._list]);
+  }
 
   return (
     <>
@@ -427,11 +464,11 @@ export default function Settings({ navigation }) {
                         const index = findSelectedAuthorIndex(item);
                         const _list = authorsList;
                         _list.splice(index, 1);
-                        setAuthorsList([..._list]);
+                        handleSetAuthorsList([..._list]);
                       } else {
                         const _list = authorsList;
                         _list.push(item);
-                        setAuthorsList([..._list]);
+                        handleSetAuthorsList([..._list]);
                       }
                     }}
                     activeOpacity={0.7}
@@ -477,7 +514,7 @@ export default function Settings({ navigation }) {
             >
               <TouchableOpacity
                 onPress={() => {
-                  setLanguage("english");
+                  handleSetLanguage("english");
                   handleAutoAuthorListFill("english");
                 }}
                 activeOpacity={0.7}
@@ -513,7 +550,7 @@ export default function Settings({ navigation }) {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  setLanguage("hindi");
+                  handleSetLanguage("hindi");
                   handleAutoAuthorListFill("hindi");
                 }}
                 activeOpacity={0.7}
