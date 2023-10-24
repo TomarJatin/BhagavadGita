@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   Dimensions,
+  Platform,
   ActivityIndicator
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,7 +18,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import storage from "@react-native-firebase/storage";
 
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
+const adUnitId = Platform.OS !== 'ios' ? "ca-app-pub-1000663314481679/9467651353": "ca-app-pub-1000663314481679/6260404632";
 
 interface Audiobook {
   id: string;
