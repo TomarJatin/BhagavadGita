@@ -5,13 +5,19 @@ import {
   FlatList,
   TouchableOpacity,
   Dimensions,
+  ActivityIndicator
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
+import Slider from "react-native-slider";
 import { FontSize, color } from "../GlobalStyles";
 import { Audio } from "expo-av";
+import { AntDesign } from '@expo/vector-icons'; 
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import storage from "@react-native-firebase/storage";
+
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
 
 interface Audiobook {
   id: string;
@@ -25,6 +31,7 @@ export default function AudioBook({ navigation }) {
     null
   );
   const [isPlaying, setIsPlaying] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [currentPosition, setCurrentPosition] = useState<number | null>(null);
   const [totalDuration, setTotalDuration] = useState<number | null>(null);
@@ -47,6 +54,7 @@ export default function AudioBook({ navigation }) {
           })
         );
         setAudiobooks(audiobookList);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching audiobooks:", error);
       }
@@ -83,16 +91,24 @@ export default function AudioBook({ navigation }) {
     };
   }, [selectedAudiobook]);
 
+  const handleSelectAudiobookClick = (item: Audiobook | null) => {
+    setSound(null);
+    setCurrentPosition(null);
+    setTotalDuration(null);
+    setIsPlaying(false);
+    setSelectedAudiobook(item)
+  }
+
   const togglePlayback = async () => {
     if (!sound) return;
 
     if (isPlaying) {
       await sound.pauseAsync();
+      setIsPlaying(false);
     } else {
       await sound.playAsync();
+      setIsPlaying(true);
     }
-
-    setIsPlaying(!isPlaying);
   };
 
   const formatTime = (time: number | null) => {
@@ -117,7 +133,7 @@ export default function AudioBook({ navigation }) {
       <FlatList
         data={["1"]}
         renderItem={() => (
-          <View style={{ padding: 15 }}>
+          <View style={{ padding: 15, paddingBottom: 100 }}>
             <Text
               style={{
                 color: Color.fontPrim,
@@ -127,35 +143,36 @@ export default function AudioBook({ navigation }) {
             >
               Audio Books
             </Text>
+            <BannerAd
+      unitId={adUnitId}
+      size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+    />
             <View>
+              {
+                loading && <ActivityIndicator size="large" />
+              }
               <FlatList
                 data={audiobooks}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                  <TouchableOpacity onPress={() => setSelectedAudiobook(item)}>
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity style={{
+                    width: "100%",
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    borderBottomWidth: 1,
+                    marginBottom: 10
+                  }} activeOpacity={0.5} onPress={() => handleSelectAudiobookClick(item)}>
                     <Text>{item.title}</Text>
                   </TouchableOpacity>
                 )}
+                style={{
+                  marginTop: 20
+                }}
               />
-              {selectedAudiobook && (
-                <View>
-                  <Text>{selectedAudiobook.title}</Text>
-                  <Text>{isPlaying ? "Playing" : "Paused"}</Text>
-                  <Text>
-                    {formatTime(currentPosition)} / {formatTime(totalDuration)}
-                  </Text>
-                  {/* <Slider
-                    // style={{ width: "80%" }}
-                    minimumValue={0}
-                    maximumValue={100}
-                    value={(currentPosition / totalDuration) * 100}
-                    onValueChange={handleSliderChange}
-                  /> */}
-                  <TouchableOpacity onPress={togglePlayback}>
-                    <Text>{isPlaying ? "Pause" : "Play"}</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
+              
             </View>
           </View>
         )}
@@ -164,6 +181,38 @@ export default function AudioBook({ navigation }) {
           minHeight: Dimensions.get("window").height,
         }}
       />
+      {selectedAudiobook && (
+                <View style={{position: "absolute", width: "100%", bottom: 60, backgroundColor: Color.fontWhite, zIndex: 20, padding: 20}}>
+                  <Text>{selectedAudiobook.title}</Text>
+                  <View style={{flexDirection: 'row', gap: 10, alignItems:'center', justifyContent: 'center'}}>
+                  <Text>
+                    {formatTime(currentPosition)}
+                  </Text>
+                  <View style={{width: "70%"}}>
+                  <Slider
+                    minimumValue={0}
+                    maximumValue={100}
+                    value={currentPosition? (currentPosition / totalDuration) * 100: 0}
+                    onValueChange={handleSliderChange}
+                    onSlidingComplete={handleSliderChange}
+                  /> 
+                  </View>
+                  <Text>
+                     {formatTime(totalDuration)}
+                  </Text>
+                  </View>
+                  
+                  <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: "20%"}}>
+                  <AntDesign name="stepbackward" size={40} color="black" />
+                  
+                  <TouchableOpacity activeOpacity={0.5} onPress={togglePlayback}>
+                  {isPlaying ? <AntDesign name="pausecircleo" size={40} color="black" />: <AntDesign name="playcircleo" size={40} color="black" />}
+                  </TouchableOpacity>
+                  <AntDesign name="stepforward" size={40} color="black" />
+                  </View>
+                  
+                </View>
+              )}
       <Navbar nav={"audiobook"} />
     </SafeAreaView>
   );
