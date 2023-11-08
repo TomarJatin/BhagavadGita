@@ -38,7 +38,7 @@
       [
         "expo-av",
         {
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+          "microphonePermission": "Allow to access your microphone."
         }
       ],
       [
@@ -49,10 +49,9 @@
           }
         }
       ]
-    ],
-    "react-native-google-mobile-ads": {
-      "android_app_id": "ca-app-pub-1000663314481679~3316084669",
-      "ios_app_id": "ca-app-pub-1000663314481679~8992463466"
-    }
+    ]
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-1000663314481679~4587580917"
   }
 }
