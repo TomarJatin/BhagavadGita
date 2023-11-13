@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Dimensions,
+  Platform
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Topbar from "../components/Topbar";
@@ -22,6 +23,16 @@ import { translations } from "../translations/main";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedChapter } from "../redux/slices/ChapterSlice";
 import { setSelectedVerse } from "../redux/slices/VerseSlice";
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+} from "react-native-google-mobile-ads";
+
+const adUnitId =
+  Platform.OS !== "ios"
+    ? "ca-app-pub-1000663314481679/6705659559"
+    : "ca-app-pub-1000663314481679/6705659559";
 
 export default function Chapter({ navigation }) {
   const theme = useSelector((state: any) => state.theme.theme);
@@ -154,53 +165,67 @@ export default function Chapter({ navigation }) {
             </View>
             <FlatList
               data={Verses[selectedChapter]}
-              renderItem={({ item, index }) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    handleSetSelectedVerses(item?.verse_number);
-                    navigation.navigate("Verse");
-                  }}
-
-                  activeOpacity={0.7}
-                  style={{
-                    paddingBottom: 4,
-                    borderBottomWidth: 1,
-                    borderColor: Color.borderColorSecondary,
-                    marginBottom: 16,
-                    width: '100%'
-                  }}
-                >
-                  <View
+              renderItem={({ item, index }) => {
+                return (
+                  <>
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleSetSelectedVerses(item?.verse_number);
+                      navigation.navigate("Verse");
+                    }}
+  
+                    activeOpacity={0.7}
                     style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      paddingBottom: 4,
+                      borderBottomWidth: 1,
+                      borderColor: Color.borderColorSecondary,
+                      marginBottom: 16,
                       width: '100%'
                     }}
                   >
-                    <View style={{ flexDirection: "row", gap: 14 }}>
-                      <Text
-                        style={{
-                          fontSize: FontSize.regular12px,
-                          color: Color.fontPrim,
-                          fontWeight: "600",
-                        }}
-                      >
-                        {translations.Verse[language]} {item.verse_number}
-                      </Text>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: '100%'
+                      }}
+                    >
+                      <View style={{ flexDirection: "row", gap: 14 }}>
+                        <Text
+                          style={{
+                            fontSize: FontSize.regular12px,
+                            color: Color.fontPrim,
+                            fontWeight: "600",
+                          }}
+                        >
+                          {translations.Verse[language]} {item.verse_number}
+                        </Text>
+                      </View>
+                      <Image
+                        style={{ width: 5, height: 10, borderRadius: 10 }}
+                        contentFit="cover"
+                        source={Icons.chevronRight}
+                      />
                     </View>
-                    <Image
-                      style={{ width: 5, height: 10, borderRadius: 10 }}
-                      contentFit="cover"
-                      source={Icons.chevronRight}
-                    />
-                  </View>
-                  <Text style={{marginTop: 10,
-                  fontSize: FontSize.regular12px,
-                  color: Color.fontPrim,
-                  fontWeight: "400",}}>{item.text}</Text>
-                </TouchableOpacity>
-              )}
+                    <Text style={{marginTop: 10,
+                    fontSize: FontSize.regular12px,
+                    color: Color.fontPrim,
+                    fontWeight: "400",}}>{item.text}</Text>
+                  </TouchableOpacity>
+                  {
+                    index%5 === 0 && <BannerAd
+                    unitId={adUnitId}
+                    size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                    requestOptions={{
+                      requestNonPersonalizedAdsOnly: true,
+                    }}
+                    key={index}
+                  />
+                  }
+                  </>
+                )
+              } }
               keyExtractor={(item) => item.id.toString()}
               style={{
                 paddingBottom: 100,

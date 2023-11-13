@@ -24,13 +24,12 @@ const SaveForLaterProvider = ({ children }) => {
       JSON.stringify(saveForLater),
       (err) => {
         if (err) {
-          console.log("an error");
+          // console.log("an error");
           throw err;
         }
-        console.log("successfully save for later");
       }
     ).catch((err) => {
-      console.log("error is: " + err);
+      // console.log("error is: " + err);
     });
   };
 
@@ -39,10 +38,6 @@ const SaveForLaterProvider = ({ children }) => {
   //   chapterId: 4,
   //   verse: ""
   // }
-
-  useEffect(() => {
-    console.log("save for later context changed ========================");
-  });
 
   return (
     <SaveForLaterContext.Provider

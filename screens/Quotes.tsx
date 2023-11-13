@@ -40,10 +40,6 @@ export default function Quotes({ navigation }) {
     directionalOffsetThreshold: 80,
   };
 
-  useEffect(() => {
-    console.log("currIdx: ", currIdx)
-  }, [currIdx])
-
   return (
     <SafeAreaView>
       <GestureRecognizer

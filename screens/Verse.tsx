@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Dimensions,
+  
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Topbar from "../components/Topbar";
@@ -25,12 +26,15 @@ import { SaveForLaterContext } from "../contexts/SaveForLaterContext";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedVerse } from "../redux/slices/VerseSlice";
 
+
 type translationType = {
   id: number;
   description: string;
   author_name: string;
   language: string;
 };
+
+
 
 export default function Verse({ navigation }) {
   const theme = useSelector((state: any) => state.theme.theme);
@@ -128,17 +132,6 @@ export default function Verse({ navigation }) {
     setSaveForLaterStorage();
   };
 
-  useEffect(() => {
-    console.log(
-      saveForLater.some((item) => {
-        return (
-          item.verseId === selectedVerse &&
-          item.chapterId === selectedChapter &&
-          item.verse === Verses[selectedChapter][selectedVerse - 1].text
-        );
-      })
-    );
-  }, [saveForLater]);
 
   return (
     <GestureRecognizer

@@ -85,6 +85,10 @@ export default function Bookmarked({navigation}) {
                 marginTop: 40,
               }}
             />
+
+            {saveForLater.length === 0 && <Text style={{color: Color.fontPrim, fontSize: FontSize.regular12px, fontWeight: '500'}}>
+              No Saved Verse
+            </Text>}
           </View>
         )}
         style={{

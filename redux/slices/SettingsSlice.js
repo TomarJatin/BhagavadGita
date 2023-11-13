@@ -5,7 +5,7 @@ const settingsSlice = createSlice({
   initialState: {
     language: "english",
     commentryOn: true,
-    wordMeaningOn: false,
+    wordMeaningOn: true,
     translationOn: true,
     transliteration: true,
     authorsList: [

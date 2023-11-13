@@ -18,6 +18,9 @@ import { translations } from "../translations/main";
 import { FlatList } from "react-native-gesture-handler";
 import { Chapters } from "../data/chapters";
 import { useDispatch, useSelector } from "react-redux";
+import { bhagavadGitaQuotes } from '../data/quotes';
+import { FontAwesome } from '@expo/vector-icons';
+import { backgroundWallpaper } from '../data/backgroundWallpaper';
 import { setSelectedChapter } from "../redux/slices/ChapterSlice";
 import Carousel from "react-native-reanimated-carousel";
 
@@ -32,7 +35,27 @@ export default function HomeScreen({ navigation }) {
   const sponserCrousel = [
     {
       bannerUrl:
-        "https://cdn.pixabay.com/photo/2023/06/23/08/51/lord-krishna-8083043_1280.png",
+        "https://w0.peakpx.com/wallpaper/984/453/HD-wallpaper-lord-krishna-with-fluet-lord-krishna-fluet-shadow.jpg",
+      text: "Yo this is working",
+    },
+    {
+      bannerUrl:
+        "https://w0.peakpx.com/wallpaper/47/974/HD-wallpaper-krishna-gopi-lord-krishna.jpg",
+      text: "Yo this is working",
+    },
+    {
+      bannerUrl:
+        "https://w0.peakpx.com/wallpaper/880/147/HD-wallpaper-lord-krishna-krishna-spiritual-krisna.jpg",
+      text: "Yo this is working",
+    },
+    {
+      bannerUrl:
+        "https://w0.peakpx.com/wallpaper/816/583/HD-wallpaper-lord-krishna-spiritual-lord-krishna-spiritual-animation.jpg",
+      text: "Yo this is working",
+    },
+    {
+      bannerUrl:
+        "https://w0.peakpx.com/wallpaper/43/9/HD-wallpaper-krishna-dwarikadhish-flute-god-krishna-krishna-flute-lord-krishna-murlidhar.jpg",
       text: "Yo this is working",
     },
   ];
@@ -76,7 +99,7 @@ export default function HomeScreen({ navigation }) {
                       autoPlay={true}
                       data={sponserCrousel}
                       scrollAnimationDuration={1000}
-                      renderItem={({ item }) => (
+                      renderItem={({ item, index }) => (
                         <View
                           style={{
                             padding: 15,
@@ -90,10 +113,13 @@ export default function HomeScreen({ navigation }) {
                               height: Dimensions.get("window").height * 0.26,
                             }}
                             imageStyle={{ borderRadius: 10 }}
-                            resizeMode="contain"
+                            resizeMode="cover"
                             source={{ uri: item.bannerUrl }}
                           >
-                            {/* <Text style={{textAlign: 'center'}}>{item.text}</Text> */}
+                            <View style={{ width: '100%', height: '100%', justifyContent: 'center', padding: 20, marginTop: -20 }}>
+            <FontAwesome name="quote-left" size={25} color={Color.topbarColor} />
+            <Text style={{ fontSize: FontSize.regular16px, fontWeight: '600', color: Color.fontWhite, lineHeight: 20, letterSpacing: 0.9, marginTop: 10 }}>{bhagavadGitaQuotes[index][language]}</Text>
+          </View>
                           </ImageBackground>
                         </View>
                       )}
