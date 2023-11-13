@@ -62,163 +62,160 @@ export default function Chapter({ navigation }) {
     directionalOffsetThreshold: 80,
   };
 
-  return React.useMemo(
-    () => (
-      <GestureRecognizer
-        onSwipeLeft={onSwipeLeft}
-        onSwipeRight={onSwipeRight}
-        config={config}
-        style={{ flex: 1}}
-      >
-        <SafeAreaView>
-        <ImageBackground
-          source={Icons.krishnaBg}
-          resizeMode="contain"
-          style={{
-            width: Dimensions.get("window").width,
-            height: Dimensions.get("window").height,
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: -1,
-          }}
-        />
-        <FlatList
-          data={["1"]}
-          renderItem={() => (
-            <View>
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                activeOpacity={0.7}
-              >
-                <Image
-                  style={{ width: 24, height: 24, borderRadius: 10 }}
-                  contentFit="cover"
-                  source={Icons.arrowLeft}
-                />
-              </TouchableOpacity>
-              <View style={{ marginTop: 30 }}>
-                <View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      gap: 30,
-                      alignItems: "center",
-                    }}
-                  >
-                    <Image
-                      style={{ width: 20, height: 20 }}
-                      contentFit="cover"
-                      source={Icons.flowerIcon}
-                    />
-                    <Text
-                      style={{
-                        fontSize: FontSize.regular14px,
-                        color: Color.chapterHeading,
-                        fontWeight: "600",
-                      }}
-                    >
-                      {translations.chapter[language]} {selectedChapter}
-                    </Text>
-                    <Image
-                      style={{ width: 20, height: 20 }}
-                      contentFit="cover"
-                      source={Icons.flowerIcon}
-                    />
-                  </View>
+  return (
+    <GestureRecognizer
+      onSwipeLeft={onSwipeLeft}
+      onSwipeRight={onSwipeRight}
+      config={config}
+      style={{ flex: 1}}
+    >
+      <SafeAreaView>
+      <ImageBackground
+        source={Icons.krishnaBg}
+        resizeMode="contain"
+        style={{
+          width: Dimensions.get("window").width,
+          height: Dimensions.get("window").height,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: -1,
+        }}
+      />
+      <FlatList
+        data={["1"]}
+        renderItem={() => (
+          <View>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              activeOpacity={0.7}
+            >
+              <Image
+                style={{ width: 24, height: 24, borderRadius: 10 }}
+                contentFit="cover"
+                source={Icons.arrowLeft}
+              />
+            </TouchableOpacity>
+            <View style={{ marginTop: 30 }}>
+              <View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    gap: 30,
+                    alignItems: "center",
+                  }}
+                >
+                  <Image
+                    style={{ width: 20, height: 20 }}
+                    contentFit="cover"
+                    source={Icons.flowerIcon}
+                  />
                   <Text
                     style={{
-                      marginTop: 10,
-                      fontSize: FontSize.regular13px,
-                      color: Color.fontPrim,
+                      fontSize: FontSize.regular14px,
+                      color: Color.chapterHeading,
                       fontWeight: "600",
-                      textAlign: "center",
                     }}
                   >
-                    {language === "english"? Chapters[selectedChapter - 1].name_translated: Chapters[selectedChapter - 1].name}
+                    {translations.chapter[language]} {selectedChapter}
                   </Text>
+                  <Image
+                    style={{ width: 20, height: 20 }}
+                    contentFit="cover"
+                    source={Icons.flowerIcon}
+                  />
                 </View>
                 <Text
                   style={{
-                    marginTop: 30,
-                    fontSize: FontSize.regular12px,
+                    marginTop: 10,
+                    fontSize: FontSize.regular13px,
                     color: Color.fontPrim,
-                    fontWeight: "400",
-                    lineHeight: 20
+                    fontWeight: "600",
+                    textAlign: "center",
                   }}
                 >
-                  {language === "english" ? Chapters[selectedChapter - 1].chapter_summary: Chapters[selectedChapter - 1].chapter_summary_hindi}
+                  {language === "english"? Chapters[selectedChapter - 1].name_translated: Chapters[selectedChapter - 1].name}
                 </Text>
               </View>
-              <FlatList
-                data={Verses[selectedChapter]}
-                renderItem={({ item, index }) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      handleSetSelectedVerses(item?.verse_number);
-                      navigation.navigate("Verse");
-                    }}
+              <Text
+                style={{
+                  marginTop: 30,
+                  fontSize: FontSize.regular12px,
+                  color: Color.fontPrim,
+                  fontWeight: "400",
+                  lineHeight: 20
+                }}
+              >
+                {language === "english" ? Chapters[selectedChapter - 1].chapter_summary: Chapters[selectedChapter - 1].chapter_summary_hindi}
+              </Text>
+            </View>
+            <FlatList
+              data={Verses[selectedChapter]}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    handleSetSelectedVerses(item?.verse_number);
+                    navigation.navigate("Verse");
+                  }}
 
-                    activeOpacity={0.7}
+                  activeOpacity={0.7}
+                  style={{
+                    paddingBottom: 4,
+                    borderBottomWidth: 1,
+                    borderColor: Color.borderColorSecondary,
+                    marginBottom: 16,
+                    width: '100%'
+                  }}
+                >
+                  <View
                     style={{
-                      paddingBottom: 4,
-                      borderBottomWidth: 1,
-                      borderColor: Color.borderColorSecondary,
-                      marginBottom: 16,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
                       width: '100%'
                     }}
                   >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        width: '100%'
-                      }}
-                    >
-                      <View style={{ flexDirection: "row", gap: 14 }}>
-                        <Text
-                          style={{
-                            fontSize: FontSize.regular12px,
-                            color: Color.fontPrim,
-                            fontWeight: "600",
-                          }}
-                        >
-                          {translations.Verse[language]} {item.verse_number}
-                        </Text>
-                      </View>
-                      <Image
-                        style={{ width: 5, height: 10, borderRadius: 10 }}
-                        contentFit="cover"
-                        source={Icons.chevronRight}
-                      />
+                    <View style={{ flexDirection: "row", gap: 14 }}>
+                      <Text
+                        style={{
+                          fontSize: FontSize.regular12px,
+                          color: Color.fontPrim,
+                          fontWeight: "600",
+                        }}
+                      >
+                        {translations.Verse[language]} {item.verse_number}
+                      </Text>
                     </View>
-                    <Text style={{marginTop: 10,
-                    fontSize: FontSize.regular12px,
-                    color: Color.fontPrim,
-                    fontWeight: "400",}}>{item.text}</Text>
-                  </TouchableOpacity>
-                )}
-                keyExtractor={(item) => item.id.toString()}
-                style={{
-                  paddingBottom: 100,
-                  marginTop: 30,
-                }}
-              />
-            </View>
-          )}
-          keyExtractor={(item) => item}
-          style={{
-            padding: 15,
-          }}
-        />
-      </SafeAreaView>
-      </GestureRecognizer>
-      
-    ),
-    [selectedChapter, theme]
-  );
+                    <Image
+                      style={{ width: 5, height: 10, borderRadius: 10 }}
+                      contentFit="cover"
+                      source={Icons.chevronRight}
+                    />
+                  </View>
+                  <Text style={{marginTop: 10,
+                  fontSize: FontSize.regular12px,
+                  color: Color.fontPrim,
+                  fontWeight: "400",}}>{item.text}</Text>
+                </TouchableOpacity>
+              )}
+              keyExtractor={(item) => item.id.toString()}
+              style={{
+                paddingBottom: 100,
+                marginTop: 30,
+              }}
+            />
+          </View>
+        )}
+        keyExtractor={(item) => item}
+        style={{
+          padding: 15,
+        }}
+      />
+    </SafeAreaView>
+    </GestureRecognizer>
+    
+  )
 }

@@ -462,13 +462,9 @@ export default function Settings({ navigation }) {
                     onPress={() => {
                       if (isAuthorSelected(item)) {
                         const index = findSelectedAuthorIndex(item);
-                        const _list = authorsList;
-                        _list.splice(index, 1);
-                        handleSetAuthorsList([..._list]);
+                        handleSetAuthorsList([...authorsList.slice(0, index), ...authorsList.slice(index+1)]);
                       } else {
-                        const _list = authorsList;
-                        _list.push(item);
-                        handleSetAuthorsList([..._list]);
+                        handleSetAuthorsList([...authorsList, item]);
                       }
                     }}
                     activeOpacity={0.7}

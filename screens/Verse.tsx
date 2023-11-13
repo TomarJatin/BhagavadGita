@@ -140,343 +140,340 @@ export default function Verse({ navigation }) {
     );
   }, [saveForLater]);
 
-  return React.useMemo(
-    () => (
-      <GestureRecognizer
-        onSwipeLeft={onSwipeLeft}
-        onSwipeRight={onSwipeRight}
-        config={config}
-        style={{ flex: 1}}
-      >
-        <SafeAreaView>
-        <ImageBackground
-          source={Icons.krishnaBg}
-          resizeMode="contain"
-          style={{
-            width: Dimensions.get("window").width,
-            height: Dimensions.get("window").height,
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: -1,
-          }}
-        />
-        <FlatList
-          data={["1"]}
-          renderItem={() => (
-            <View>
-              {/* topbar */}
+  return (
+    <GestureRecognizer
+      onSwipeLeft={onSwipeLeft}
+      onSwipeRight={onSwipeRight}
+      config={config}
+      style={{ flex: 1}}
+    >
+      <SafeAreaView>
+      <ImageBackground
+        source={Icons.krishnaBg}
+        resizeMode="contain"
+        style={{
+          width: Dimensions.get("window").width,
+          height: Dimensions.get("window").height,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: -1,
+        }}
+      />
+      <FlatList
+        data={["1"]}
+        renderItem={() => (
+          <View>
+            {/* topbar */}
+            <View
+              style={{
+                width: "100%",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                activeOpacity={0.7}
+              >
+                <Image
+                  style={{ width: 24, height: 24, borderRadius: 10 }}
+                  contentFit="cover"
+                  source={Icons.arrowLeft}
+                />
+              </TouchableOpacity>
               <View
                 style={{
-                  width: "100%",
-                  justifyContent: "space-between",
                   flexDirection: "row",
+                  gap: 40,
                   alignItems: "center",
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => navigation.goBack()}
                   activeOpacity={0.7}
+                  onPress={handleBookMark}
                 >
-                  <Image
-                    style={{ width: 24, height: 24, borderRadius: 10 }}
-                    contentFit="cover"
-                    source={Icons.arrowLeft}
-                  />
+                  {saveForLater.some((item) => {
+                    return (
+                      item.verseId === selectedVerse &&
+                      item.chapterId === selectedChapter &&
+                      item.verse ===
+                        Verses[selectedChapter][selectedVerse - 1].text
+                    );
+                  }) ? (
+                    <FontAwesome name="bookmark" size={24} color="black" />
+                  ) : (
+                    <FontAwesome name="bookmark-o" size={24} color="black" />
+                  )}
                 </TouchableOpacity>
-                <View
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => navigation.navigate("Settings")}
+                >
+                  <Feather name="settings" size={24} color="black" />
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={{ marginTop: 40 }}>
+              <View>
+                {/* <View
                   style={{
                     flexDirection: "row",
-                    gap: 40,
+                    justifyContent: "center",
+                    gap: 30,
                     alignItems: "center",
                   }}
                 >
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={handleBookMark}
-                  >
-                    {saveForLater.some((item) => {
-                      return (
-                        item.verseId === selectedVerse &&
-                        item.chapterId === selectedChapter &&
-                        item.verse ===
-                          Verses[selectedChapter][selectedVerse - 1].text
-                      );
-                    }) ? (
-                      <FontAwesome name="bookmark" size={24} color="black" />
-                    ) : (
-                      <FontAwesome name="bookmark-o" size={24} color="black" />
-                    )}
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() => navigation.navigate("Settings")}
-                  >
-                    <Feather name="settings" size={24} color="black" />
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              <View style={{ marginTop: 40 }}>
-                <View>
-                  {/* <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      gap: 30,
-                      alignItems: "center",
-                    }}
-                  >
-                    <Image
-                      style={{ width: 20, height: 20 }}
-                      contentFit="cover"
-                      source={Icons.flowerIcon}
-                    />
-                    <Text
-                      style={{
-                        fontSize: FontSize.regular14px,
-                        color: Color.chapterHeading,
-                        fontWeight: "600",
-                      }}
-                    >
-                      CHAPTER {selectedChapter}
-                    </Text>
-                    <Image
-                      style={{ width: 20, height: 20 }}
-                      contentFit="cover"
-                      source={Icons.flowerIcon}
-                    />
-                  </View> */}
+                  <Image
+                    style={{ width: 20, height: 20 }}
+                    contentFit="cover"
+                    source={Icons.flowerIcon}
+                  />
                   <Text
                     style={{
-                      fontSize: FontSize.regular16px,
+                      fontSize: FontSize.regular14px,
+                      color: Color.chapterHeading,
+                      fontWeight: "600",
+                    }}
+                  >
+                    CHAPTER {selectedChapter}
+                  </Text>
+                  <Image
+                    style={{ width: 20, height: 20 }}
+                    contentFit="cover"
+                    source={Icons.flowerIcon}
+                  />
+                </View> */}
+                <Text
+                  style={{
+                    fontSize: FontSize.regular16px,
+                    color: Color.fontPrim,
+                    fontWeight: "600",
+                    textAlign: "center",
+                  }}
+                >
+                  {selectedChapter}.{selectedVerse}
+                </Text>
+                <Text
+                  style={{
+                    marginTop: 10,
+                    fontSize: FontSize.regular13px,
+                    color: Color.gold,
+                    fontWeight: "600",
+                    textAlign: "center",
+                  }}
+                >
+                  {Verses[selectedChapter][selectedVerse - 1].text}
+                </Text>
+              </View>
+              {transliteration && (
+                <View style={{ marginTop: 30 }}>
+                  <Text
+                    style={{
+                      fontSize: FontSize.regular13px,
                       color: Color.fontPrim,
                       fontWeight: "600",
                       textAlign: "center",
                     }}
                   >
-                    {selectedChapter}.{selectedVerse}
+                    {translations.transliteration[language]}
                   </Text>
                   <Text
                     style={{
                       marginTop: 10,
+                      fontSize: FontSize.regular12px,
+                      color: Color.fontPrim,
+                      fontWeight: "400",
+                      textAlign: "center",
+                      fontStyle: "italic",
+                      letterSpacing: 1,
+                      lineHeight: 20,
+                    }}
+                  >
+                    {
+                      Verses[selectedChapter][selectedVerse - 1]
+                        .transliteration
+                    }
+                  </Text>
+                </View>
+              )}
+              {wordMeaningOn && (
+                <View style={{ marginTop: 30 }}>
+                  <Text
+                    style={{
                       fontSize: FontSize.regular13px,
-                      color: Color.gold,
+                      color: Color.fontPrim,
                       fontWeight: "600",
                       textAlign: "center",
                     }}
                   >
-                    {Verses[selectedChapter][selectedVerse - 1].text}
+                    WORD MEANINGS
                   </Text>
-                </View>
-                {transliteration && (
-                  <View style={{ marginTop: 30 }}>
-                    <Text
-                      style={{
-                        fontSize: FontSize.regular13px,
-                        color: Color.fontPrim,
-                        fontWeight: "600",
-                        textAlign: "center",
-                      }}
-                    >
-                      {translations.transliteration[language]}
-                    </Text>
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        fontSize: FontSize.regular12px,
-                        color: Color.fontPrim,
-                        fontWeight: "400",
-                        textAlign: "center",
-                        fontStyle: "italic",
-                        letterSpacing: 1,
-                        lineHeight: 20,
-                      }}
-                    >
-                      {
-                        Verses[selectedChapter][selectedVerse - 1]
-                          .transliteration
-                      }
-                    </Text>
-                  </View>
-                )}
-                {wordMeaningOn && (
-                  <View style={{ marginTop: 30 }}>
-                    <Text
-                      style={{
-                        fontSize: FontSize.regular13px,
-                        color: Color.fontPrim,
-                        fontWeight: "600",
-                        textAlign: "center",
-                      }}
-                    >
-                      WORD MEANINGS
-                    </Text>
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        fontSize: FontSize.regular12px,
-                        color: Color.fontPrim,
-                        fontWeight: "400",
-                        textAlign: "center",
-                        lineHeight: 20,
-                      }}
-                    >
-                      {Verses[selectedChapter][selectedVerse - 1].word_meanings}
-                    </Text>
-                  </View>
-                )}
-                {translationOn && (
-                  <View style={{ marginTop: 30 }}>
-                    <Text
-                      style={{
-                        fontSize: FontSize.regular13px,
-                        color: Color.fontPrim,
-                        fontWeight: "600",
-                        textAlign: "center",
-                      }}
-                    >
-                      {translations.translations[language]}
-                    </Text>
-                    <FlatList
-                      data={getTranslations()}
-                      renderItem={({ item, index }) => (
-                        <View key={index} style={{ marginBottom: 10 }}>
-                          <Text
-                            style={{
-                              fontSize: FontSize.regular12px,
-                              color: Color.fontPrim,
-                              fontWeight: "400",
-                              lineHeight: 20,
-                            }}
-                          >
-                            {translations.author[language]} - {item.author_name}
-                          </Text>
-                          <Text
-                            style={{
-                              marginTop: 6,
-                              fontSize: FontSize.regular12px,
-                              color: Color.fontPrim,
-                              fontWeight: "400",
-                              textAlign: "center",
-                              lineHeight: 20,
-                            }}
-                          >
-                            {item.description}
-                          </Text>
-                        </View>
-                      )}
-                      style={{
-                        marginTop: 10,
-                      }}
-                    />
-                  </View>
-                )}
-                {commentryOn && (
-                  <View style={{ marginTop: 30, paddingBottom: 100 }}>
-                    <Text
-                      style={{
-                        fontSize: FontSize.regular13px,
-                        color: Color.fontPrim,
-                        fontWeight: "600",
-                        textAlign: "center",
-                      }}
-                    >
-                      {translations.commentary[language]}
-                    </Text>
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        fontSize: FontSize.regular12px,
-                        color: Color.fontPrim,
-                        fontWeight: "400",
-                        textAlign: "center",
-                        lineHeight: 20,
-                      }}
-                    >
-                      {getCommentary()}
-                    </Text>
-                  </View>
-                )}
-                {/* <Text
-                  style={{
-                    marginTop: 30,
-                    fontSize: FontSize.regular12px,
-                    color: Color.fontPrim,
-                    fontWeight: "400",
-                  }}
-                >
-                  {Chapters[selectedChapter - 1].chapter_summary_hindi}
-                </Text> */}
-              </View>
-              {/* <FlatList
-                data={Verses[selectedChapter]}
-                renderItem={({ item, index }) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      setSelectedVerse(item?.verse_number);
-                      navigation.navigate("Verse");
-                    }}
-
-                    activeOpacity={0.7}
+                  <Text
                     style={{
-                      paddingBottom: 4,
-                      borderBottomWidth: 1,
-                      borderColor: Color.borderColorSecondary,
-                      marginBottom: 16,
-                      width: '100%'
+                      marginTop: 10,
+                      fontSize: FontSize.regular12px,
+                      color: Color.fontPrim,
+                      fontWeight: "400",
+                      textAlign: "center",
+                      lineHeight: 20,
                     }}
                   >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        width: '100%'
-                      }}
-                    >
-                      <View style={{ flexDirection: "row", gap: 14 }}>
+                    {Verses[selectedChapter][selectedVerse - 1].word_meanings}
+                  </Text>
+                </View>
+              )}
+              {translationOn && (
+                <View style={{ marginTop: 30 }}>
+                  <Text
+                    style={{
+                      fontSize: FontSize.regular13px,
+                      color: Color.fontPrim,
+                      fontWeight: "600",
+                      textAlign: "center",
+                    }}
+                  >
+                    {translations.translations[language]}
+                  </Text>
+                  <FlatList
+                    data={getTranslations()}
+                    renderItem={({ item, index }) => (
+                      <View key={index} style={{ marginBottom: 10 }}>
                         <Text
                           style={{
                             fontSize: FontSize.regular12px,
                             color: Color.fontPrim,
-                            fontWeight: "600",
+                            fontWeight: "400",
+                            lineHeight: 20,
                           }}
                         >
-                          Verse {item.verse_number}
+                          {translations.author[language]} - {item.author_name}
+                        </Text>
+                        <Text
+                          style={{
+                            marginTop: 6,
+                            fontSize: FontSize.regular12px,
+                            color: Color.fontPrim,
+                            fontWeight: "400",
+                            textAlign: "center",
+                            lineHeight: 20,
+                          }}
+                        >
+                          {item.description}
                         </Text>
                       </View>
-                      <Image
-                        style={{ width: 5, height: 10, borderRadius: 10 }}
-                        contentFit="cover"
-                        source={Icons.chevronRight}
-                      />
-                    </View>
-                    <Text style={{marginTop: 10,
-                    fontSize: FontSize.regular12px,
-                    color: Color.fontPrim,
-                    fontWeight: "400",}}>{item.text}</Text>
-                  </TouchableOpacity>
-                )}
-                keyExtractor={(item) => item.id.toString()}
+                    )}
+                    style={{
+                      marginTop: 10,
+                    }}
+                  />
+                </View>
+              )}
+              {commentryOn && (
+                <View style={{ marginTop: 30, paddingBottom: 100 }}>
+                  <Text
+                    style={{
+                      fontSize: FontSize.regular13px,
+                      color: Color.fontPrim,
+                      fontWeight: "600",
+                      textAlign: "center",
+                    }}
+                  >
+                    {translations.commentary[language]}
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      fontSize: FontSize.regular12px,
+                      color: Color.fontPrim,
+                      fontWeight: "400",
+                      textAlign: "center",
+                      lineHeight: 20,
+                    }}
+                  >
+                    {getCommentary()}
+                  </Text>
+                </View>
+              )}
+              {/* <Text
                 style={{
-                  paddingBottom: 100,
                   marginTop: 30,
+                  fontSize: FontSize.regular12px,
+                  color: Color.fontPrim,
+                  fontWeight: "400",
                 }}
-              /> */}
+              >
+                {Chapters[selectedChapter - 1].chapter_summary_hindi}
+              </Text> */}
             </View>
-          )}
-          keyExtractor={(item) => item}
-          style={{
-            padding: 15,
-          }}
-        />
-      </SafeAreaView>
-      </GestureRecognizer>
-      
-    ),
-    [selectedChapter, theme, selectedVerse, saveForLater]
-  );
+            {/* <FlatList
+              data={Verses[selectedChapter]}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectedVerse(item?.verse_number);
+                    navigation.navigate("Verse");
+                  }}
+
+                  activeOpacity={0.7}
+                  style={{
+                    paddingBottom: 4,
+                    borderBottomWidth: 1,
+                    borderColor: Color.borderColorSecondary,
+                    marginBottom: 16,
+                    width: '100%'
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      width: '100%'
+                    }}
+                  >
+                    <View style={{ flexDirection: "row", gap: 14 }}>
+                      <Text
+                        style={{
+                          fontSize: FontSize.regular12px,
+                          color: Color.fontPrim,
+                          fontWeight: "600",
+                        }}
+                      >
+                        Verse {item.verse_number}
+                      </Text>
+                    </View>
+                    <Image
+                      style={{ width: 5, height: 10, borderRadius: 10 }}
+                      contentFit="cover"
+                      source={Icons.chevronRight}
+                    />
+                  </View>
+                  <Text style={{marginTop: 10,
+                  fontSize: FontSize.regular12px,
+                  color: Color.fontPrim,
+                  fontWeight: "400",}}>{item.text}</Text>
+                </TouchableOpacity>
+              )}
+              keyExtractor={(item) => item.id.toString()}
+              style={{
+                paddingBottom: 100,
+                marginTop: 30,
+              }}
+            /> */}
+          </View>
+        )}
+        keyExtractor={(item) => item}
+        style={{
+          padding: 15,
+        }}
+      />
+    </SafeAreaView>
+    </GestureRecognizer>
+    
+  )
 }
